@@ -18,6 +18,15 @@ import sys
 from gpiozero import CPUTemperature
 import time
 from datetime import datetime
+from signal import *
+import sys, time
+
+def clean(*args):
+    print("clean me")
+    sys.exit(0)
+
+for sig in (SIGABRT, SIGILL, SIGINT, SIGSEGV, SIGTERM):
+    signal(sig, clean)
 
 if os.name != 'posix':
     sys.exit('{} platform not supported'.format(os.name))
