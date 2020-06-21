@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Copyright (c) 2014-18 Richard Hull and contributors
 # See LICENSE.rst for details.
@@ -174,6 +174,28 @@ def get_device():
 
     return device
 
+# State Machine using a Switch Case Workaround in Python
+# Implement Python Switch Case Statement using Class
+class StateMachine:
+
+    def switchState(self, state):
+        default = "Not a valid State"
+        return getattr(self, 'state_' + state, lambda: default)()
+
+    def state_Init(self):
+        print("State Machine now in State 'Init'")
+        time.sleep(2)
+        self.switchState("1")
+        print("State Machine automatically switching to State '1'")
+ 
+    def state_1(self):
+        print("State Machine now in State '1'")
+        time.sleep(2)
+        self.switchState("Init")
+        print("State Machine automatically switching to State 'Init'")
+ 
+
+s = StateMachine()
 
 if __name__ == "__main__":
     try:
@@ -182,3 +204,5 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         pass
+
+
