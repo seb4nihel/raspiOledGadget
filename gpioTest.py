@@ -26,7 +26,6 @@ if __name__ == "__main__":
     shutdown_btn1 = Button(21)
     shutdown_btn2 = Button(16)
     event = asyncio.Event()
-    event.set()
     loop.create_task(button_ctl(shutdown_btn1, shutdown_btn2, event))
     loop.create_task(main_loop(event))
     try:
