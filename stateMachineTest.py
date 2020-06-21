@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import time
+import asyncio
 from signal import *
 
 def clean(*args):
@@ -15,22 +16,22 @@ for sig in (SIGABRT, SIGILL, SIGINT, SIGSEGV, SIGTERM):
 # Implement Python Switch Case Statement using Class
 class StateMachine:
 
-    def switchState(self, state):
+    async def switchState(self, state):
         default = "Not a valid State"
-        return getattr(self, 'state_' + state, lambda: default)()
+        return await getattr(self, 'state_' + state, lambda: default)()
 
-    def state_Init(self):
+    async def state_Init(self):
         print("State Machine now in State 'Init'")
-        time.sleep(2)
-        self.switchState("1")
+        await asyncio.sleep(2)
+        await self.switchState("1")
         print("State Machine automatically switching to State '1'")
  
-    def state_1(self):
+    async def state_1(self):
         print("State Machine now in State '1'")
-        time.sleep(2)
-        self.switchState("Init")
+        await asyncio.sleep(2)
+        await self.switchState("Init")
         print("State Machine automatically switching to State 'Init'")
  
-
 s = StateMachine()
-s.switchState("Init")
+loop = asyncio.get_event_loop()
+loop.run_until_complete(s.switchState("Init"))
